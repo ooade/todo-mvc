@@ -6,12 +6,12 @@ mongoose.Promise = global.Promise;
 const TodoSchema = new mongoose.Schema({
   text: {
     type: String,
-    description: "A todo"
+    description: 'A todo'
   },
   completed: {
     type: Boolean,
     default: false,
-    description: "Returns True for completed Todo"
+    description: 'Returns True for completed Todo'
   }
 });
 
