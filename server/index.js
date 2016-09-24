@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
     pretty: true,
     schema
   }));
-  const graphQLServer = graphql.listen(config.graphql.port, () => console.log(chalk.green(`GraphQL is listening on port ${config.graphql.port}`)));
+  graphql.listen(config.graphql.port, () => console.log(chalk.green(`GraphQL is listening on port ${config.graphql.port}`)));
 
   // Launch Relay by using webpack.config.js
   const app = new WebpackDevServer(
