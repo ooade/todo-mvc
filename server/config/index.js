@@ -1,5 +1,4 @@
 /* eslint-disable global-require */
-import _ from 'lodash';
 
 const config = {
   env: process.env.NODE_ENV || 'development',
