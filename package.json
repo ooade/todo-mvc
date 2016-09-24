@@ -51,6 +51,7 @@
     "file-loader": "^0.9.0",
     "graphql": "^0.7.0",
     "graphql-relay": "^0.4.3",
+    "graphql-relay-subscription": "^0.1.2",
     "html-webpack-plugin": "^2.22.0",
     "lodash": "^4.15.0",
     "mongoose": "^4.6.0",
