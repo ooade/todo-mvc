@@ -1,0 +1,240 @@
+schema {
+  query: RootQuery
+  mutation: RootMutation
+  subscription: RootSubscription
+}
+
+input addSubTodoInput {
+  clientSubscriptionId: String
+}
+
+type addSubTodoPayload {
+  viewer: Viewer
+  changedSubTodoSubEdge: changedSubTodoEdge
+  clientSubscriptionId: String
+}
+
+input addTodoInput {
+  # A todo
+  text: String
+
+  # Returns True for completed Todo
+  completed: Boolean
+  clientMutationId: String
+}
+
+type addTodoPayload {
+  viewer: Viewer
+  changedTodoEdge: changedTodoEdge
+  clientMutationId: String
+}
+
+# An edge in a connection.
+type changedSubTodoEdge {
+  # The item at the end of the edge
+  node: changedSubTodoSubNode
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type changedSubTodoSubNode {
+  # A todo
+  text: String
+
+  # Returns True for completed Todo
+  completed: Boolean
+  _id: ID
+
+  # The ID of an object
+  id: ID!
+}
+
+# An edge in a connection.
+type changedTodoEdge {
+  # The item at the end of the edge
+  node: changedTodoNode
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type changedTodoNode {
+  # A todo
+  text: String
+
+  # Returns True for completed Todo
+  completed: Boolean
+  _id: ID
+
+  # The ID of an object
+  id: ID!
+}
+
+input deleteSubTodoInput {
+  clientSubscriptionId: String
+}
+
+type deleteSubTodoPayload {
+  viewer: Viewer
+  ok: Boolean
+  id: ID!
+  clientSubscriptionId: String
+}
+
+input deleteTodoInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type deleteTodoPayload {
+  viewer: Viewer
+  ok: Boolean
+  id: ID!
+  clientMutationId: String
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+enum orderByTodo {
+  TEXT_ASC
+  TEXT_DESC
+  COMPLETED_ASC
+  COMPLETED_DESC
+  _ID_ASC
+  _ID_DESC
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type RootMutation {
+  addTodo(input: addTodoInput!): addTodoPayload
+  updateTodo(input: updateTodoInput!): updateTodoPayload
+  deleteTodo(input: deleteTodoInput!): deleteTodoPayload
+}
+
+type RootQuery {
+  todo(id: ID!): Todo
+  todos(
+    # The ID of a Todo
+    id: [ID]
+
+    # The ID of a Todo
+    ids: [ID]
+    orderBy: orderByTodo
+
+    # A todo
+    text: String
+
+    # Returns True for completed Todo
+    completed: Boolean
+    _id: ID
+  ): [Todo]
+  viewer: Viewer
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+type RootSubscription {
+  addSubTodo(input: addSubTodoInput!): addSubTodoPayload
+  updateSubTodo(input: updateSubTodoInput!): updateSubTodoPayload
+  deleteSubTodo(input: deleteSubTodoInput!): deleteSubTodoPayload
+}
+
+type Todo implements Node {
+  # A todo
+  text: String
+
+  # Returns True for completed Todo
+  completed: Boolean
+  _id: ID
+
+  # The ID of an object
+  id: ID!
+}
+
+# A connection to a list of items.
+type TodoConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [TodoEdge]
+  count: Int
+}
+
+# An edge in a connection.
+type TodoEdge {
+  # The item at the end of the edge
+  node: Todo
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input updateSubTodoInput {
+  id: ID!
+  clientSubscriptionId: String
+}
+
+type updateSubTodoPayload {
+  viewer: Viewer
+  changedSubTodo: Todo
+  clientSubscriptionId: String
+}
+
+input updateTodoInput {
+  # A todo
+  text: String
+
+  # Returns True for completed Todo
+  completed: Boolean
+  id: ID!
+  clientMutationId: String
+}
+
+type updateTodoPayload {
+  changedTodo: Todo
+  clientMutationId: String
+}
+
+type Viewer implements Node {
+  # The ID of an object
+  id: ID!
+  todos(
+    after: String
+    first: Int
+    before: String
+    last: Int
+    orderBy: orderByTodo
+
+    # A todo
+    text: String
+
+    # Returns True for completed Todo
+    completed: Boolean
+    _id: ID
+  ): TodoConnection
+  todo(id: ID!): Todo
+}
