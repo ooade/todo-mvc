@@ -5,7 +5,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import graphQLHTTP from 'express-graphql';
 import WebpackDevServer from 'webpack-dev-server';
-import historyApiFallback from 'connect-history-api-fallback';
 import chalk from 'chalk';
 import webpackConfig from '../webpack.config';
 import config from './config';
