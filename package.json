@@ -6,7 +6,9 @@
     "start": "cross-env NODE_ENV=development nodemon --watch server/* --exec \"npm run update && babel-node server/index.js\"",
     "update": "babel-node server/utils/updateSchema.js",
     "deploy": "cross-env NODE_ENV=production webpack --config webpack.config.js && npm run update && cross-env NODE_ENV=production cross-env APP_URL=http://localhost:3000 babel-node server/index.js",
-    "lint": "eslint --ignore-path .gitignore client"
+    "lint": "eslint --ignore-path .gitignore client",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "pre-commit": "lint",
   "repository": {
@@ -67,6 +69,8 @@
     "todomvc-app-css": "^2.0.6",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^1.15.0"
-  }
+    "webpack-dev-server": "^1.15.0",
+    "snyk": "^1.192.0"
+  },
+  "snyk": true
 }
